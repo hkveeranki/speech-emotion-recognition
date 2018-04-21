@@ -42,7 +42,7 @@ def read_data(flatten=True):
     os.chdir(dataset_folder)
     print os.getcwd()
     for i, directory in enumerate(data_folders):
-        print "started folder", directory
+        print "started reading folder", directory
         os.chdir(directory)
         for filename in os.listdir('.'):
             fs, signal = read_wav(filename)
@@ -64,6 +64,7 @@ def read_data(flatten=True):
             X_data.append(mfcc)
             Y_data.append(i)
             cnt += 1
+        print "ended reading folder", directory
         os.chdir('..')
     return X_data, Y_data
 
@@ -76,7 +77,7 @@ def get_data(flatten=True):
     """
     data, labels = read_data(flatten)
     x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
-    return x_train, x_test, y_train, y_test
+    return np.array(x_train), np.array(x_test), np.array(y_train), np.array(y_test)
 
 
 def display_metrics(y_pred, y_true):

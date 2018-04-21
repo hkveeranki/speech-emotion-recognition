@@ -24,10 +24,7 @@ def get_model(model_name):
         return RandomForestClassifier(n_estimators=30, criterion='entropy')
     elif model_name == models[2]:
         return MLPClassifier(activation='logistic', verbose=True,
-                             hidden_layer_sizes=(500,), batch_size=32, max_iter=1000)
-    else:
-        sys.stderr.write('Invalid Model ID')
-        sys.exit(-1)
+                             hidden_layer_sizes=(500,), batch_size=64)
 
 
 def trainAndTest(model_name):
@@ -48,5 +45,8 @@ if __name__ == "__main__":
     for i, name in enumerate(models):
         print i, '-', name
     n = input('Number for the Classifier you want to train: ')
+    if n >= len(models):
+        sys.stderr.write('Invalid Model ID')
+        sys.exit(-1)
     print 'model given', models[n]
     trainAndTest(models[n])
