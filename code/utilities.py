@@ -28,7 +28,12 @@ def read_wav(filename):
     return wav.read(filename)
 
 
-def read_data():
+def read_data(flatten=True):
+    """
+    Read the data files, generate features
+    :param flatten: Boolean specifying whether to flatten the data or not
+    :return: generated features of each sample and corresponding label
+    """
     X_data = []
     Y_data = []
     max_fs = 0
@@ -54,7 +59,8 @@ def read_data():
                 pad_len /= 2
                 mfcc = np.pad(mfcc, ((pad_len, pad_len + pad_rem), (0, 0)), 'constant', constant_values=0)
             min_sample = min(min_sample, len(mfcc))
-            mfcc = mfcc.flatten()
+            if flatten:
+                mfcc = mfcc.flatten()
             X_data.append(mfcc)
             Y_data.append(i)
             cnt += 1
@@ -62,12 +68,13 @@ def read_data():
     return X_data, Y_data
 
 
-def get_data():
+def get_data(flatten=True):
     """
     Read the files get the data perform the test-train split and return them to the caller
+    :param flatten: Boolean specifying whether to flatten the data or not
     :return: 4 arrays, x_train x_test y_train y_test
     """
-    data, labels = read_data()
+    data, labels = read_data(flatten)
     x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
     return x_train, x_test, y_train, y_test
 
