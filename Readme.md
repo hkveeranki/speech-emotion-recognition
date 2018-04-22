@@ -28,12 +28,12 @@ If you prefer to accelerate keras training on GPU's you can install `tensorflow-
 
 ### Details of the code
 - `utilities.py` - Contains code to read the files, extract the features and create test and train data
-- `train_model.py` - Code to train non DL models. The code has three models
-	- `SVM`
-	- `Random Forest`
-	- `Neural Network`
-- `train_DNN.py` - Code to train Deep learning Models. Supports two models
-    - `LSTM`
-    - `CNN`
+- `train_model.py` - Code to train non DL models. The code has three models with below given model numbers
+	- `1 - SVM`
+	- `2 - Random Forest`
+	- `3 - Neural Network`
+- `train_DNN.py` - Code to train Deep learning Models. Supports two models with below given model numbers
+    - `1 - CNN`
+    - `2 - LSTM`
 ### Executing the code
-Run `python2 train_<>.py` from the command line.
+Run `python2 train_<>.py <model_number>` from the command line.

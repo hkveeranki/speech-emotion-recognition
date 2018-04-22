@@ -24,10 +24,10 @@ def get_model(model_name):
         return RandomForestClassifier(n_estimators=30)
     elif model_name == models[2]:
         return MLPClassifier(activation='logistic', verbose=True,
-                             hidden_layer_sizes=(500,), batch_size=32)
+                             hidden_layer_sizes=(512,), batch_size=32)
 
 
-def trainAndTest(model_name):
+def evaluateModel(model_name):
     """
     generate a model train it test it and display its metrics
     :param model_name:
@@ -42,11 +42,21 @@ def trainAndTest(model_name):
 
 
 if __name__ == "__main__":
-    for i, name in enumerate(models):
-        print i, '-', name
-    n = input('Number for the Classifier you want to train: ')
-    if n >= len(models):
-        sys.stderr.write('Invalid Model ID')
+
+    if len(sys.argv) != 2:
+        sys.stderr.write('Invalid arguments\n')
+        sys.stderr.write('Usage python2 train_DNN.py <model_number>\n')
+        sys.stderr.write('1 - SVM\n')
+        sys.stderr.write('2 - Random Forest\n')
+        sys.stderr.write('3 - Neural Network\n')
         sys.exit(-1)
+
+    n = int(sys.argv[1]) - 1
+
+    if n > len(models):
+        sys.stderr.write('Invalid Model number')
+        sys.exit(-1)
+
     print 'model given', models[n]
-    trainAndTest(models[n])
+
+    evaluateModel(models[n])
