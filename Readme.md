@@ -21,9 +21,12 @@ Install one of python package managers in your distro. If you install pip, then 
 If you prefer to accelerate keras training on GPU's you can install `tensorflow-gpu` by 
 `pip2 install tensorflow-gpu`
 
-### Details of the code
+### Directory Structure
+- `code` - Contains all the code files
+- `dataset` - Contains the speech files in wav formatted seperated into 7 folders which are the corresponding labels of those files
+- `models` - Contains the saved models which obtained best accuracy on test data.
 
-The code folder contains all the code required. It contains three files
+### Details of the code
 - `utilities.py` - Contains code to read the files, extract the features and create test and train data
 - `train_model.py` - Code to train non DL models. The code has three models
 	- `SVM`
