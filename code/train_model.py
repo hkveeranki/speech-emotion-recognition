@@ -19,12 +19,12 @@ def get_model(model_name):
     :return: created model with fit and predict methods
     """
     if model_name == models[0]:
-        return SVC(multi_class='ovr')
+        return SVC(multi_class='crammer_singer')
     elif model_name == models[1]:
-        return RandomForestClassifier(n_estimators=30, criterion='entropy')
+        return RandomForestClassifier(n_estimators=30)
     elif model_name == models[2]:
         return MLPClassifier(activation='logistic', verbose=True,
-                             hidden_layer_sizes=(500,), batch_size=64)
+                             hidden_layer_sizes=(500,), batch_size=32)
 
 
 def trainAndTest(model_name):

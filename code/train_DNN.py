@@ -1,87 +1,99 @@
-from keras import Sequential
-from keras.layers import LSTM, Dense, Dropout, Conv2D, AveragePooling1D, AveragePooling2D, Flatten, BatchNormalization, \
-    Activation, MaxPooling2D
 import numpy as np
-
+import sys
+from keras import Sequential
+from keras.layers import LSTM, Dense, Dropout, Conv2D, Flatten, \
+    BatchNormalization, Activation, MaxPooling2D
 from keras.utils import np_utils
-from sklearn.preprocessing import LabelEncoder
-import utilities
+from tqdm import tqdm
 
-from utilities import get_data, display_metrics
+from utilities import get_data, class_labels
 
 models = ["CNN", "LSTM"]
-x_train, x_test, y_train, y_test = get_data(False)
 
 
-def get_model(model_name):
+def get_model(model_name, input_shape):
     """
     Generate the required model and return it
     :return: Model created
     """
+    # Models are inspired from
+    # CNN - https://yashk2810.github.io/Applying-Convolutional-Neural-Network-on-the-MNIST-dataset/
+    # LSTM - https://github.com/harry-7/Deep-Sentiment-Analysis/blob/master/code/generatePureLSTM.py
+    model = Sequential()
     if model_name == 'CNN':
-
-        model = Sequential()
-        model.add(Conv2D(16, (2, 2),
-                         input_shape=(x_train[0].shape[0], x_train[0].shape[1], 1)))
+        model.add(Conv2D(8, (13, 13),
+                         input_shape=(input_shape[0], input_shape[1], 1)))
         model.add(BatchNormalization(axis=-1))
         model.add(Activation('relu'))
-        model.add(Conv2D(16, (2, 2)))
-        model.add(BatchNormalization(axis=-1))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 1)))
-
-        model.add(Conv2D(32, (2, 2)))
-        model.add(BatchNormalization(axis=-1))
-        model.add(Activation('relu'))
-        model.add(Conv2D(32, (2, 2)))
+        model.add(Conv2D(8, (13, 13)))
         model.add(BatchNormalization(axis=-1))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 1)))
-
+        model.add(Conv2D(8, (13, 13)))
+        model.add(BatchNormalization(axis=-1))
+        model.add(Activation('relu'))
+        model.add(Conv2D(8, (2, 2)))
+        model.add(BatchNormalization(axis=-1))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 1)))
         model.add(Flatten())
-
-        # Fully connected layer
-        model.add(Dense(256))
+        model.add(Dense(64))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(Dropout(0.2))
-        # model.add(BatchNormalization())
-        # model.add(AveragePooling2D(pool_size=(2, 2)))
-        # model.add(Conv2D(filters=16, kernel_size=(7, 1)))
-        # model.add(Dropout(0.5))
-        # model.add(Flatten())
-        # model.add(Dense(480, activation='tanh'))
-        # model.add(Dropout(0.4))
-        # model.add(Dense(120, activation='sigmoid'))
-        # model.add(Dropout(0.3))
-        # model.add(Dense(32, activation='relu'))
-        # model.add(Dropout(0.2))
-        model.add(Dense(len(utilities.class_labels), activation='softmax'))
-        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     elif model_name == 'LSTM':
-        model = Sequential()
-        model.add(LSTM(128, input_shape=()))
+        model.add(LSTM(128, input_shape=(input_shape[0], input_shape[1])))
         model.add(Dropout(0.5))
         model.add(Dense(32, activation='relu'))
         model.add(Dense(16, activation='tanh'))
-        model.add(Dense(len(utilities.class_labels), activation='softmax'))
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
+    model.add(Dense(len(class_labels), activation='softmax'))
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     print(model.summary())
     return model
 
 
-orig_test = np.array(y_test)
-encoder = LabelEncoder()
-encoder.fit(np.concatenate((y_test, y_train), axis=0))
-y_train = np_utils.to_categorical(encoder.transform(y_train))
-y_test = np_utils.to_categorical(encoder.transform(y_test))
-model = get_model('CNN')
-in_shape = x_train[0].shape
-x_train = x_train.reshape(x_train.shape[0], in_shape[0], in_shape[1], 1)
-x_test = x_test.reshape(x_test.shape[0], in_shape[0], in_shape[1], 1)
-model.fit(x_train, y_train, batch_size=32, epochs=50, verbose=True, validation_data=(x_test, y_test))
+def evaluateModel(model):
+    """
+    Train the model and evaluate it
+    :param model: model to be evaluted
+    """
+    # Train the epochs
+    best_acc = 0
+    global x_train, y_train, x_test, y_test
+    for i in tqdm(range(50)):
+        # Shuffle the data for each epoch in unison inspired from https://stackoverflow.com/a/4602224
+        p = np.random.permutation(len(x_train))
+        x_train = x_train[p]
+        y_train = y_train[p]
+        model.fit(x_train, y_train, batch_size=32, epochs=1)
+        loss, acc = model.evaluate(x_test, y_test)
+        if acc > best_acc:
+            print 'Updated best accuracy', acc
+            best_acc = acc
+            model.save_weights(best_model_path)
+    model.load_weights(best_model_path)
+    print 'Accuracy = ', model.evaluate(x_test, y_test)[1]
 
-y_pred = model.predict(x_test)
-pred = [np.argmax(x) for x in y_pred]
-display_metrics(pred, orig_test)
+
+if __name__ == "__main__":
+    # Read data
+    global x_train, y_train, x_test, y_test
+    x_train, x_test, y_train, y_test = get_data(flatten=False)
+    y_train = np_utils.to_categorical(y_train)
+    y_test = np_utils.to_categorical(y_test)
+    # Select the model
+    n = input('1 - CNN\n2 - LSTM\n')
+
+    if n == 1:
+        # Model is CNN so have to reshape the data
+        in_shape = x_train[0].shape
+        x_train = x_train.reshape(x_train.shape[0], in_shape[0], in_shape[1], 1)
+        x_test = x_test.reshape(x_test.shape[0], in_shape[0], in_shape[1], 1)
+    elif n > len(models):
+        sys.stderr.write('Model Not Implemented yet')
+        sys.exit(-1)
+
+    model = get_model(models[n - 1], x_train[0].shape)
+    global best_model_path
+    best_model_path = 'best_model_' + models[n - 1] + '.h5'
+    evaluateModel(model)
