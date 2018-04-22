@@ -95,5 +95,5 @@ if __name__ == "__main__":
 
     model = get_model(models[n - 1], x_train[0].shape)
     global best_model_path
-    best_model_path = 'best_model_' + models[n - 1] + '.h5'
+    best_model_path = '../models/best_model_' + models[n - 1] + '.h5'
     evaluateModel(model)
