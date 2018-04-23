@@ -77,7 +77,7 @@ def evaluateModel(model):
 
 if __name__ == "__main__":
 
-    if len(sys.argv) != 1:
+    if len(sys.argv) != 2:
         sys.stderr.write('Invalid arguments\n')
         sys.stderr.write('Usage python2 train_DNN.py <model_number>\n')
         sys.stderr.write('1 - CNN\n')
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         sys.stderr.write('Model Not Implemented yet')
         sys.exit(-1)
 
-    model = get_model(models[n - 1], x_train[0].shape)
+    model = get_model(models[n], x_train[0].shape)
 
     global best_model_path
     best_model_path = '../models/best_model_' + models[n - 1] + '.h5'
