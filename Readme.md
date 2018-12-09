@@ -22,18 +22,20 @@ If you prefer to accelerate keras training on GPU's you can install `tensorflow-
 `pip2 install tensorflow-gpu`
 
 ### Directory Structure
-- `code` - Contains all the code files
+- `speechemotionrecognition` - Package folder which contains all the code files corresponding to package
 - `dataset` - Contains the speech files in wav formatted seperated into 7 folders which are the corresponding labels of those files
 - `models` - Contains the saved models which obtained best accuracy on test data.
+- `example.py` - Contains examples on how to use the package
 
-### Details of the code
+### Details of the package
 - `utilities.py` - Contains code to read the files, extract the features and create test and train data
-- `train_model.py` - Code to train non DL models. The code has three models with below given model numbers
+- `mlmodel.py` - Code to train non DL models. We have three models
 	- `1 - SVM`
 	- `2 - Random Forest`
 	- `3 - Neural Network`
-- `train_DNN.py` - Code to train Deep learning Models. Supports two models with below given model numbers
+- `dnn.py` - Code to train Deep learning Models. Supports two models given below
     - `1 - CNN`
     - `2 - LSTM`
-### Executing the code
-Run `python2 train_<>.py <model_number>` from the command line.
+
+### Using the package
+Look at `example.py` for sample usage.

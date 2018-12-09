@@ -9,10 +9,7 @@ import numpy as np
 import scipy.io.wavfile as wav
 import os
 import speechpy
-from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
-
-dataset_folder = "dataset/"
 
 class_labels = ["Neutral", "Angry", "Happy", "Sad"]
 
@@ -28,9 +25,10 @@ def read_wav(filename):
     return wav.read(filename)
 
 
-def get_data(flatten=True, mfcc_len=39):
+def get_data(dataset_path, flatten=True, mfcc_len=39):
     """
     Read the files get the data perform the test-train split and return them to the caller
+    :param dataset_path: path to the dataset folder
     :param mfcc_len: Number of mfcc features to take for each frame
     :param flatten: Boolean specifying whether to flatten the data or not
     :return: 4 arrays, x_train x_test y_train y_test
@@ -42,8 +40,8 @@ def get_data(flatten=True, mfcc_len=39):
     s = 0
     cnt = 0
     cur_dir = os.getcwd()
-    os.chdir('..')
-    os.chdir(dataset_folder)
+    print('curdir', cur_dir)
+    os.chdir(dataset_path)
     for i, directory in enumerate(class_labels):
         print "started reading folder", directory
         os.chdir(directory)
@@ -60,7 +58,6 @@ def get_data(flatten=True, mfcc_len=39):
                 signal = np.pad(signal, (pad_len, pad_len + pad_rem), 'constant', constant_values=0)
             else:
                 pad_len = s_len - mslen
-                pad_rem = pad_len % 2
                 pad_len /= 2
                 signal = signal[pad_len:pad_len + mslen]
             min_sample = min(len(signal), min_sample)
@@ -77,8 +74,3 @@ def get_data(flatten=True, mfcc_len=39):
     os.chdir(cur_dir)
     x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, random_state=42)
     return np.array(x_train), np.array(x_test), np.array(y_train), np.array(y_test)
-
-
-def display_metrics(y_pred, y_true):
-    print accuracy_score(y_pred=y_pred, y_true=y_true)
-    print confusion_matrix(y_pred=y_pred, y_true=y_true)
