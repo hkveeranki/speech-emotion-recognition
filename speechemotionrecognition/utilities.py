@@ -36,7 +36,6 @@ def get_data(dataset_path, flatten=True, mfcc_len=39):
     data = []
     labels = []
     max_fs = 0
-    min_sample = int('9' * 10)
     s = 0
     cnt = 0
     cur_dir = os.getcwd()
@@ -60,7 +59,6 @@ def get_data(dataset_path, flatten=True, mfcc_len=39):
                 pad_len = s_len - mslen
                 pad_len /= 2
                 signal = signal[pad_len:pad_len + mslen]
-            min_sample = min(len(signal), min_sample)
             mfcc = speechpy.feature.mfcc(signal, fs, num_cepstral=mfcc_len)
 
             if flatten:
