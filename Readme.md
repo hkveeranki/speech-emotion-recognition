@@ -39,3 +39,13 @@ If you prefer to accelerate keras training on GPU's you can install `tensorflow-
 
 ### Using the package
 Look at `example.py` for sample usage.
+
+### Contributing to the repository.
+* If you find any problem with the code, please feel free to open an issue.
+* Found something you can improve, please send me a pull request with your changes.
+I will be more than happy to review and approve them.
+
+### Contacting me
+You can send an email to [harry7.opensource@gmail.com](mailto:harry7.opensource@gmail.com)
+
+**Note**: If you find this code useful, please leave a star :)
