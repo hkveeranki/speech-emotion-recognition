@@ -27,8 +27,9 @@ class DNN(Model):
         self.model = Sequential()
         self.make_default_model()
         self.model.add(Dense(num_classes, activation='softmax'))
-        self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-        print(self.model.summary())
+        self.model.compile(loss='binary_crossentropy', optimizer='adam',
+                           metrics=['accuracy'])
+        print(self.model.summary(), file=sys.stderr)
         self.save_path = self.save_path or self.name + '_best_model.h5'
 
     def load_model(self, to_load):
@@ -42,12 +43,15 @@ class DNN(Model):
         self.model.save_weights(self.save_path)
 
     def evaluate(self, x_test, y_test):
-        print 'Accuracy =', self.model.evaluate(x_test, y_test)[1]
+        print('Accuracy =', self.model.evaluate(x_test, y_test)[1])
 
-    def train(self, x_train, y_train, x_val=None, y_val=None):
+    def train(self, x_train, y_train, x_val=None, y_val=None, n_epochs=50):
         best_acc = 0
-        for i in xrange(50):
-            # Shuffle the data for each epoch in unison inspired from https://stackoverflow.com/a/4602224
+        if x_val is None or y_val is None:
+            x_val, y_val = x_train, y_train
+        for i in range(n_epochs):
+            # Shuffle the data for each epoch in unison inspired
+            # from https://stackoverflow.com/a/4602224
             p = np.random.permutation(len(x_train))
             x_train = x_train[p]
             y_train = y_train[p]
@@ -75,7 +79,8 @@ class CNN(DNN):
 
     def make_default_model(self):
         self.model.add(Conv2D(8, (13, 13),
-                              input_shape=(self.input_shape[0], self.input_shape[1], 1)))
+                              input_shape=(
+                                  self.input_shape[0], self.input_shape[1], 1)))
         self.model.add(BatchNormalization(axis=-1))
         self.model.add(Activation('relu'))
         self.model.add(Conv2D(8, (13, 13)))
@@ -106,7 +111,8 @@ class LSTM(DNN):
         super(LSTM, self).__init__(input_shape, num_classes, **params)
 
     def make_default_model(self):
-        self.model.add(lstm(128, input_shape=(self.input_shape[0], self.input_shape[1])))
+        self.model.add(
+            lstm(128, input_shape=(self.input_shape[0], self.input_shape[1])))
         self.model.add(Dropout(0.5))
         self.model.add(Dense(32, activation='relu'))
         self.model.add(Dense(16, activation='tanh'))

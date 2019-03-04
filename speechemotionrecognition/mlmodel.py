@@ -22,8 +22,9 @@ class MLModel(Model):
 
     def evaluate(self, x_test, y_test):
         y_pred = self.predict(x_test)
-        print accuracy_score(y_pred=y_pred, y_true=y_test)
-        print confusion_matrix(y_pred=y_pred, y_true=y_test)
+        print('Accuracy:%.3f\n' % accuracy_score(y_pred=y_pred, y_true=y_test))
+        print('Confusion matrix:', confusion_matrix(y_pred=y_pred,
+                                                    y_true=y_test))
 
     def save_model(self):
         pickle.dump(self.model, open(self.save_path, "wb"))
