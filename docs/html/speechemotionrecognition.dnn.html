@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>speechemotionrecognition.dnn module &mdash; Speech Emotion Recognition 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="speechemotionrecognition.mlmodel module" href="speechemotionrecognition.mlmodel.html" />
+    <link rel="prev" title="speechemotionrecognition package" href="speechemotionrecognition.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="main.html" class="icon icon-home"> Speech Emotion Recognition
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Speech Emotion Recognition</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">speechemotionrecognition</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="speechemotionrecognition.html">speechemotionrecognition package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="speechemotionrecognition.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">speechemotionrecognition.dnn module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="speechemotionrecognition.mlmodel.html">speechemotionrecognition.mlmodel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="speechemotionrecognition.utilities.html">speechemotionrecognition.utilities module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="speechemotionrecognition.html#module-speechemotionrecognition">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="main.html">Speech Emotion Recognition</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="main.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">speechemotionrecognition</a> &raquo;</li>
+        
+          <li><a href="speechemotionrecognition.html">speechemotionrecognition package</a> &raquo;</li>
+        
+      <li>speechemotionrecognition.dnn module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/speechemotionrecognition.dnn.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-speechemotionrecognition.dnn">
+<span id="speechemotionrecognition-dnn-module"></span><h1>speechemotionrecognition.dnn module<a class="headerlink" href="#module-speechemotionrecognition.dnn" title="Permalink to this headline">¶</a></h1>
+<p>This file contains classes which implement deep neural networks namely CNN and LSTM</p>
+<dl class="class">
+<dt id="speechemotionrecognition.dnn.CNN">
+<em class="property">class </em><code class="descclassname">speechemotionrecognition.dnn.</code><code class="descname">CNN</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#CNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.CNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#speechemotionrecognition.dnn.DNN" title="speechemotionrecognition.dnn.DNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">speechemotionrecognition.dnn.DNN</span></code></a></p>
+<p>This class handles CNN for speech emotion recognitions</p>
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.CNN.make_default_model">
+<code class="descname">make_default_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#CNN.make_default_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.CNN.make_default_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a CNN keras model with the default hyper parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="speechemotionrecognition.dnn.DNN">
+<em class="property">class </em><code class="descclassname">speechemotionrecognition.dnn.</code><code class="descname">DNN</code><span class="sig-paren">(</span><em>input_shape</em>, <em>num_classes</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="speechemotionrecognition.html#speechemotionrecognition.Model" title="speechemotionrecognition.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">speechemotionrecognition.Model</span></code></a></p>
+<p>This class is parent class for all Deep neural network models. Any class
+inheriting this class should implement <cite>make_default_model</cite> method which
+creates a model with a set of hyper parameters.</p>
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>input_shape</em>, <em>num_classes</em>, <em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor to initialize the deep neural network model. Takes the input
+shape and number of classes and other parameters required for the
+abstract class <cite>Model</cite> as parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_shape</strong> (<em>tuple</em>) – shape of the input</li>
+<li><strong>num_classes</strong> (<em>int</em>) – number of different classes ( labels ) in the data.</li>
+<li><strong>**params</strong> – Additional parameters required by the underlying abstract
+class <cite>Model</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x_test</em>, <em>y_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the current model on the given test data and return the
+accuracy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_test</strong> (<em>numpy.ndarray</em>) – Numpy nD array or a list like object
+containing the samples.</li>
+<li><strong>y_test</strong> (<em>numpy.ndarray</em>) – Numpy 1D array or list like object
+containing the labels for test samples.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the accuracy produced by the model on given test data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>to_load</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the model weights from the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>to_load</strong> (<em>str</em>) – path to the saved model file in h5 format.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.make_default_model">
+<code class="descname">make_default_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.make_default_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.make_default_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the model with default hyper parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model weights to <cite>save_path</cite> provided while creating the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>x_train</em>, <em>y_train</em>, <em>x_val=None</em>, <em>y_val=None</em>, <em>n_epochs=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the model on the given training data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_train</strong> (<em>numpy.ndarray</em>) – samples of training data.</li>
+<li><strong>y_train</strong> (<em>numpy.ndarray</em>) – labels for training data.</li>
+<li><strong>x_val</strong> (<em>numpy.ndarray</em>) – Optional, samples in the validation data.</li>
+<li><strong>y_val</strong> (<em>numpy.ndarray</em>) – Optional, labels of the validation data.</li>
+<li><strong>n_epochs</strong> (<em>int</em>) – Number of epochs to be trained.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="speechemotionrecognition.dnn.LSTM">
+<em class="property">class </em><code class="descclassname">speechemotionrecognition.dnn.</code><code class="descname">LSTM</code><span class="sig-paren">(</span><em>**params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#LSTM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.LSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#speechemotionrecognition.dnn.DNN" title="speechemotionrecognition.dnn.DNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">speechemotionrecognition.dnn.DNN</span></code></a></p>
+<p>This class handles CNN for speech emotion recognitions</p>
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.LSTM.make_default_model">
+<code class="descname">make_default_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#LSTM.make_default_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.LSTM.make_default_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the LSTM model with keras with the default hyper parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="speechemotionrecognition.mlmodel.html" class="btn btn-neutral float-right" title="speechemotionrecognition.mlmodel module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="speechemotionrecognition.html" class="btn btn-neutral float-left" title="speechemotionrecognition package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Hemanth Kumar Veeranki
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

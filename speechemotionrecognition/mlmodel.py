@@ -4,12 +4,13 @@ This file contains all the non deep learning models
 import pickle
 import sys
 
-from sklearn.metrics import accuracy_score, confusion_matrix
-
-from . import Model
+import numpy
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import LinearSVC
+
+from . import Model
 
 
 class MLModel(Model):
@@ -20,7 +21,7 @@ class MLModel(Model):
     def __init__(self, **params):
         super(MLModel, self).__init__(**params)
 
-    def evaluate(self, x_test, y_test):
+    def evaluate(self, x_test:numpy.ndarray, y_test:numpy.ndarray) -> None:
         y_pred = self.predict(x_test)
         print('Accuracy:%.3f\n' % accuracy_score(y_pred=y_pred, y_true=y_test))
         print('Confusion matrix:', confusion_matrix(y_pred=y_pred,
@@ -29,12 +30,18 @@ class MLModel(Model):
     def save_model(self):
         pickle.dump(self.model, open(self.save_path, "wb"))
 
-    def load_model(self, to_load):
+    def load_model(self, to_load:str):
         try:
             self.model = pickle.load(open(self.save_path, "rb"))
         except:
             sys.stderr.write("Invalid saved file provided")
             sys.exit(-1)
+
+    def train(self, x_train, y_train, x_val=None, y_val=None):
+        self.model.fit(x_train, y_train)
+        self.trained = True
+        if self.save_path:
+            self.save_model()
 
 
 class SVM(MLModel):

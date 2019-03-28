@@ -6,40 +6,35 @@ This file contains functions to read the data files from the given folders and
 generate Mel Frequency Cepestral Coefficients features for the given audio
 files as training samples.
 """
-import numpy as np
-
-import scipy.io.wavfile as wav
 import os
 import sys
-from speechpy.feature import mfcc
+
+import numpy as np
+import scipy.io.wavfile as wav
 from sklearn.model_selection import train_test_split
+from speechpy.feature import mfcc
 
 mean_signal_length = 32000  # Empirically calculated for the given data set
 
 
-def read_wav(filename):
-    """
-    Read the wav file and return corresponding data
-    :param filename: name of the file
-    :return: return tuple containing sampling frequency and signal
-    """
-    return wav.read(filename)
-
-
-def get_data(data_path, flatten=True, mfcc_len=39,
+def get_data(data_path: str, flatten=True, mfcc_len=39,
              class_labels=("Neutral", "Angry", "Happy", "Sad")):
     """
     Process the data for training and testing.
 
     Perform the following steps.
     1. Read the files and get the audio frame.
-    2. Perform the test-train split
+    2. Perform the test-train split.
 
-    :param class_labels: class labels that we care about.
-    :param data_path: path to the dataset folder
-    :param mfcc_len: Number of mfcc features to take for each frame
-    :param flatten: Boolean specifying whether to flatten the data or not
-    :return: 4 arrays, x_train x_test y_train y_test
+    Args:
+        data_path (str): path to the data set folder
+        flatten (bool): Boolean specifying whether to flatten the data or not.
+        mfcc_len (int): Number of mfcc features to take for each frame.
+        class_labels (tuple): class labels that we care about.
+
+    Returns:
+        4 numpy arrays, x_train x_test y_train y_test which represent training
+        samples, test samples, training labels and testing labels.
     """
     data = []
     labels = []
@@ -51,7 +46,7 @@ def get_data(data_path, flatten=True, mfcc_len=39,
         sys.stderr.write("started reading folder %s\n" % directory)
         os.chdir(directory)
         for filename in os.listdir('.'):
-            fs, signal = read_wav(filename)
+            fs, signal = wav.read(filename)
             max_fs = max(max_fs, fs)
             s_len = len(signal)
             # pad the signals to have same size if lesser than required

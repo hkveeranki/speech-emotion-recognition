@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang="en" >
+	<![endif]-->
+	<!--[if gt IE 8]><!-->
+	<html class="no-js" lang="en" >
+		<!--<![endif]-->
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>Speech Emotion Recognition &mdash; Speech Emotion Recognition 1.0 documentation</title>
+			<script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+			<script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+			<script type="text/javascript" src="_static/jquery.js"></script>
+			<script type="text/javascript" src="_static/underscore.js"></script>
+			<script type="text/javascript" src="_static/doctools.js"></script>
+			<script type="text/javascript" src="_static/language_data.js"></script>
+			<script type="text/javascript" src="_static/js/theme.js"></script>
+			<link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+			<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+			<link rel="index" title="Index" href="genindex.html" />
+			<link rel="search" title="Search" href="search.html" />
+			<link rel="next" title="speechemotionrecognition" href="modules.html" />
+			<link rel="prev" title="Welcome to Speech Emotion Recognition’s documentation!" href="main.html" />
+		</head>
+		<body class="wy-body-for-nav">
+			<div class="wy-grid-for-nav">
+				<nav data-toggle="wy-nav-shift" class="wy-nav-side">
+					<div class="wy-side-scroll">
+						<div class="wy-side-nav-search" >
+							<a href="main.html" class="icon icon-home"> Speech Emotion Recognition
+							</a>
+							<div role="search">
+								<form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+									<input type="text" name="q" placeholder="Search docs" />
+									<input type="hidden" name="check_keywords" value="yes" />
+									<input type="hidden" name="area" value="default" />
+								</form>
+							</div>
+						</div>
+						<div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+							<p class="caption"><span class="caption-text">Contents:</span></p>
+							<ul class="current">
+								<li class="toctree-l1 current">
+									<a class="current reference internal" href="#">Speech Emotion Recognition</a>
+									<ul>
+										<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#installing-dependencies">Installing dependencies</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#details-of-the-package">Details of the package</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#using-the-package">Using the package</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#contributing-to-the-repository">Contributing to the repository.</a></li>
+										<li class="toctree-l2"><a class="reference internal" href="#contacting-me">Contacting me</a></li>
+									</ul>
+								</li>
+								<li class="toctree-l1"><a class="reference internal" href="modules.html">speechemotionrecognition</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+					<nav class="wy-nav-top" aria-label="top navigation">
+						<i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+						<a href="speechemotionrecognition.html">Speech Emotion Recognition</a>
+					</nav>
+					<div class="wy-nav-content">
+						<div class="rst-content">
+							<div role="navigation" aria-label="breadcrumbs navigation">
+								<ul class="wy-breadcrumbs">
+									<li><a href="main.html">Docs</a> &raquo;</li>
+									<li>Speech Emotion Recognition</li>
+									<li class="wy-breadcrumbs-aside">
+										<a href="_sources/index.md.txt" rel="nofollow"> View page source</a>
+									</li>
+								</ul>
+								<hr/>
+							</div>
+							<div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+								<div itemprop="articleBody">
+									<div class="section" id="speech-emotion-recognition">
+										<h1>Speech Emotion Recognition<a class="headerlink" href="#speech-emotion-recognition" title="Permalink to this headline">¶</a></h1>
+										<p>This repository contains our work on Speech emotion recognition using emodb dataset. This dataset is available here <a class="reference external" href="http://www.emodb.bilderbar.info/download/">Emo-db</a></p>
+										<div class="section" id="prerequisites">
+											<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+											<p>Linux (preferable Ubuntu LTS). Python2.x</p>
+										</div>
+										<div class="section" id="installing-dependencies">
+											<h2>Installing dependencies<a class="headerlink" href="#installing-dependencies" title="Permalink to this headline">¶</a></h2>
+											<p>Dependencies are listed below and in the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file.</p>
+											<ul class="simple">
+												<li>h5py</li>
+												<li>Keras</li>
+												<li>scipy</li>
+												<li>sklearn</li>
+												<li>speechpy</li>
+												<li>tensorflow</li>
+												<li>tqdm</li>
+											</ul>
+											<p>Install one of python package managers in your distro. If you install pip, then you can install the dependencies by running
+												<code class="docutils literal notranslate"><span class="pre">pip2</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>
+											</p>
+											<p>If you prefer to accelerate keras training on GPU’s you can install <code class="docutils literal notranslate"><span class="pre">tensorflow-gpu</span></code> by
+												<code class="docutils literal notranslate"><span class="pre">pip2</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code>
+											</p>
+										</div>
+										<div class="section" id="directory-structure">
+											<h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
+											<ul class="simple">
+												<li><code class="docutils literal notranslate"><span class="pre">speechemotionrecognition</span></code> - Package folder which contains all the code files corresponding to package</li>
+												<li><code class="docutils literal notranslate"><span class="pre">dataset</span></code> - Contains the speech files in wav formatted seperated into 7 folders which are the corresponding labels of those files</li>
+												<li><code class="docutils literal notranslate"><span class="pre">models</span></code> - Contains the saved models which obtained best accuracy on test data.</li>
+												<li><code class="docutils literal notranslate"><span class="pre">example.py</span></code> - Contains examples on how to use the package</li>
+											</ul>
+										</div>
+										<div class="section" id="details-of-the-package">
+											<h2>Details of the package<a class="headerlink" href="#details-of-the-package" title="Permalink to this headline">¶</a></h2>
+											<ul class="simple">
+												<li><code class="docutils literal notranslate"><span class="pre">utilities.py</span></code> - Contains code to read the files, extract the features and create test and train data</li>
+												<li>
+													<code class="docutils literal notranslate"><span class="pre">mlmodel.py</span></code> - Code to train non DL models. We have three models
+													<ul>
+														<li><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">SVM</span></code></li>
+														<li><code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">Random</span> <span class="pre">Forest</span></code></li>
+														<li><code class="docutils literal notranslate"><span class="pre">3</span> <span class="pre">-</span> <span class="pre">Neural</span> <span class="pre">Network</span></code></li>
+													</ul>
+												</li>
+												<li>
+													<code class="docutils literal notranslate"><span class="pre">dnn.py</span></code> - Code to train Deep learning Models. Supports two models given below
+													<ul>
+														<li><code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">CNN</span></code></li>
+														<li><code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">-</span> <span class="pre">LSTM</span></code></li>
+													</ul>
+												</li>
+											</ul>
+										</div>
+										<div class="section" id="using-the-package">
+											<h2>Using the package<a class="headerlink" href="#using-the-package" title="Permalink to this headline">¶</a></h2>
+											<p>Look at <code class="docutils literal notranslate"><span class="pre">example.py</span></code> for sample usage.</p>
+										</div>
+										<div class="section" id="contributing-to-the-repository">
+											<h2>Contributing to the repository.<a class="headerlink" href="#contributing-to-the-repository" title="Permalink to this headline">¶</a></h2>
+											<ul class="simple">
+												<li>If you find any problem with the code, please feel free to open an issue.</li>
+												<li>Found something you can improve, please send me a pull request with your changes.
+													I will be more than happy to review and approve them.
+												</li>
+											</ul>
+										</div>
+										<div class="section" id="contacting-me">
+											<h2>Contacting me<a class="headerlink" href="#contacting-me" title="Permalink to this headline">¶</a></h2>
+											<p>You can send an email to <a class="reference external" href="mailto:harry7&#46;opensource&#37;&#52;&#48;gmail&#46;com">harry7<span>&#46;</span>opensource<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+											<p><strong>Note</strong>: If you find this code useful, please leave a star :)</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<footer>
+								<div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+									<a href="modules.html" class="btn btn-neutral float-right" title="speechemotionrecognition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+									<a href="main.html" class="btn btn-neutral float-left" title="Welcome to Speech Emotion Recognition’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+								</div>
+								<hr/>
+								<div role="contentinfo">
+									<p>
+										&copy; Copyright 2019, Hemanth Kumar Veeranki
+									</p>
+								</div>
+								Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+							</footer>
+						</div>
+					</div>
+				</section>
+			</div>
+			<script type="text/javascript">
+				jQuery(function () {
+				    SphinxRtdTheme.Navigation.enable(true);
+				});
+			</script>
+		</body>
+	</html>

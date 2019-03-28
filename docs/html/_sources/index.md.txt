@@ -41,10 +41,6 @@ If you prefer to accelerate keras training on GPU's you can install `tensorflow-
 ## Using the package
 Look at `example.py` for sample usage.
 
-## Documentation
-Code documentation can be found [here](https://harry-7.github.io/speech-emotion-recognition/html/main.html)
-
-
 ## Contributing to the repository.
 * If you find any problem with the code, please feel free to open an issue.
 * Found something you can improve, please send me a pull request with your changes.

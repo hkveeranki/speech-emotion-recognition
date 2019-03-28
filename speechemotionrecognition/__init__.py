@@ -1,20 +1,44 @@
 """
-speechemotionrecognition module
-Provides a library to perform speech emotion recognition on `emodb` dataset
+speechemotionrecognition module.
+Provides a library to perform speech emotion recognition on `emodb` data set
 """
 import sys
+from typing import Any
+
+import numpy
 
 __author__ = 'harry-7'
 
 
 class Model(object):
     """
-    Model is the abstract class which determines how a model should be
+    Model is the abstract class which determines how a model should be.
+    Any model inheriting this class should do the following.
+
+    1.  Set the model instance variable to the corresponding model class which
+        which will provide methods `fit` and `predict`.
+
+    2.  Should implement the following abstract methods `load_model`,
+        `save_model` `train` and `evaluate`. These methods provide the
+        functionality to save the model to the disk, load the model from the
+        disk and train the model and evaluate the model to return appropriate
+        measure like accuracy, f1 score, etc.
+
+    Attributes:
+        model (Any): instance variable that holds the model.
+        save_path (str): path to save the model.
+        name (str): name of the model.
+        trained (bool): True if model has been trained, false otherwise.
     """
 
-    def __init__(self, save_path=None, name='Not Specified', **params):
+    def __init__(self, save_path: str = '', name: str = 'Not Specified'):
         """
-        Default constructor
+        Default constructor for abstract class Model.
+
+        Args:
+            save_path(str): path to save the model to.
+            name(str): name of the model given as string.
+
         """
         # Place holder for model
         self.model = None
@@ -25,62 +49,91 @@ class Model(object):
         # Model has been trained or not
         self.trained = False
 
-    def train(self, x_train, y_train, x_val=None, y_val=None):
+    def train(self, x_train: numpy.ndarray, y_train: numpy.ndarray,
+              x_val: numpy.ndarray = None,
+              y_val: numpy.ndarray = None) -> None:
         """
-        Trains the model with the given training data
-        :param x_train: training samples
-        :param y_train:  traning labels
-        """
-        self.model.fit(x_train, y_train)
-        self.trained = True
-        if self.save_path:
-            self.save_model()
+        Trains the model with the given training data.
 
-    def predict(self, data):
+        Args:
+            x_train (numpy.ndarray): samples of training data.
+            y_train (numpy.ndarray): labels for training data.
+            x_val (numpy.ndarray): Optional, samples in the validation data.
+            y_val (numpy.ndarray): Optional, labels of the validation data.
+
         """
-        Predict labels for given data
-        :param data: data for which labels need to be predicted
-        :return:
+        # This will be specific to model so should be implemented by
+        # child classes
+        raise NotImplementedError()
+
+    def predict(self, samples: numpy.ndarray) -> numpy.ndarray:
+        """
+        Predict labels for given data.
+
+        Args:
+            samples (numpy.ndarray): data for which labels need to be predicted
+
+        Returns:
+            labels predicted for the data.
+
         """
         if not self.trained:
-            sys.stderr.write("Model should be trained or loaded before doing predict\n")
+            sys.stderr.write(
+                "Model should be trained or loaded before doing predict\n")
             sys.exit(-1)
-        return self.model.predict(data)
+        return self.model.predict(samples)
 
-    def restore_model(self, load_path=None):
+    def restore_model(self, load_path: str = None) -> None:
         """
-        restore the weights to the model
-        :param load_path: optional, path to load the weights from a given path
-        :return:
+        Restore the weights from a saved model and load them to the model.
+
+        Args:
+            load_path (str): Optional, path to load the weights from a given path.
+
         """
         to_load = load_path or self.save_path
         if to_load is None:
-            sys.stderr.write("Provide a path to load from or save_path of the model\n")
+            sys.stderr.write(
+                "Provide a path to load from or save_path of the model\n")
             sys.exit(-1)
         self.load_model(to_load)
         self.trained = True
 
-    def load_model(self, to_load):
+    def load_model(self, to_load: str) -> None:
         """
-        Load the weights from the given saved model
-        :param to_load: path from where to load saved model
+        Load the weights from the given saved model.
+
+        Args:
+            to_load: path containing the saved model.
+
         """
-        # This will be specific to model so should be implemented by child classes
+        # This will be specific to model so should be implemented by
+        # child classes
         raise NotImplementedError()
 
-    def save_model(self):
+    def save_model(self) -> None:
         """
-        Save the model to `save_path`
+        Save the model to path denoted by `save_path` instance variable.
         """
-        # This will be specific to model so should be implemented by child classes
+        # This will be specific to model so should be implemented by
+        # child classes
         raise NotImplementedError()
 
-    def evaluate(self, x_test, y_test):
+    def evaluate(self, x_test: numpy.ndarray, y_test: numpy.ndarray) -> None:
         """
-        Evaluate the model with given test data and labels
-        :param x_test: test data samples
-        :param y_test: test data labels
-        :return: Evaluation measures for the model
+        Evaluate the current model on the given test data and return the
+        accuracy.
+
+        Args:
+            x_test (numpy.ndarray): Numpy nD array or a list like object
+                                    containing the samples.
+            y_test (numpy.ndarray): Numpy 1D array or list like object
+                                    containing the labels for test samples.
+
+        Returns:
+             the accuracy produced by the model on given test data.
+
         """
-        # This will be specific to model so should be implemented by child classes
+        # This will be specific to model so should be implemented by child
+        # classes
         raise NotImplementedError()
