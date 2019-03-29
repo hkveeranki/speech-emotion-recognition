@@ -5,7 +5,8 @@ This repository contains our work on Speech emotion recognition using emodb data
 ### Prerequisites
 Linux (preferable Ubuntu LTS). Python2.x 
 
-### Installing dependencies 
+### Installing dependencies
+*Note*: You can skip this step, if you are installing the packages. 
 Dependencies are listed below and in the `requirements.txt` file.
 
 * h5py
@@ -14,13 +15,12 @@ Dependencies are listed below and in the `requirements.txt` file.
 * sklearn
 * speechpy
 * tensorflow
-* tqdm
 
 Install one of python package managers in your distro. If you install pip, then you can install the dependencies by running 
-`pip2 install -r requirements.txt` 
+`pip3 install -r requirements.txt` 
 
 If you prefer to accelerate keras training on GPU's you can install `tensorflow-gpu` by 
-`pip2 install tensorflow-gpu`
+`pip3 install tensorflow-gpu`
 
 ### Directory Structure
 - `speechemotionrecognition/` - Package folder which contains all the code files corresponding to package
