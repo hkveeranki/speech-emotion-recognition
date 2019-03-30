@@ -1,5 +1,6 @@
 .idea/
 docs/_*
-speechemotionrecognition/*.pyc
-speechemotionrecognition/__pycache__
+*/*.pyc
+*/__pycache__
+*/__pycache__
 speechemotionrecognition/*.ipynb*

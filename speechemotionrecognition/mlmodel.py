@@ -6,7 +6,6 @@ import sys
 
 import numpy
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import LinearSVC
 
@@ -21,16 +20,10 @@ class MLModel(Model):
     def __init__(self, **params):
         super(MLModel, self).__init__(**params)
 
-    def evaluate(self, x_test:numpy.ndarray, y_test:numpy.ndarray) -> None:
-        y_pred = self.predict(x_test)
-        print('Accuracy:%.3f\n' % accuracy_score(y_pred=y_pred, y_true=y_test))
-        print('Confusion matrix:', confusion_matrix(y_pred=y_pred,
-                                                    y_true=y_test))
-
     def save_model(self):
         pickle.dump(self.model, open(self.save_path, "wb"))
 
-    def load_model(self, to_load:str):
+    def load_model(self, to_load: str):
         try:
             self.model = pickle.load(open(self.save_path, "rb"))
         except:
@@ -42,6 +35,13 @@ class MLModel(Model):
         self.trained = True
         if self.save_path:
             self.save_model()
+
+    def predict_one(self, sample):
+        if not self.trained:
+            sys.stderr.write(
+                "Model should be trained or loaded before doing predict\n")
+            sys.exit(-1)
+        return self.model.predict(numpy.array([sample]))
 
 
 class SVM(MLModel):

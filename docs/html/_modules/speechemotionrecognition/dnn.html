@@ -80,7 +80,6 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../index.html">Speech Emotion Recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">speechemotionrecognition</a></li>
 </ul>
 
@@ -210,9 +209,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="DNN.evaluate"><a class="viewcode-back" href="../../speechemotionrecognition.dnn.html#speechemotionrecognition.dnn.DNN.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="DNN.train"><a class="viewcode-back" href="../../speechemotionrecognition.dnn.html#speechemotionrecognition.dnn.DNN.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_val</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Train the model on the given training data.</span>
@@ -241,10 +237,19 @@
                 <span class="n">best_acc</span> <span class="o">=</span> <span class="n">acc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trained</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="DNN.make_default_model"><a class="viewcode-back" href="../../speechemotionrecognition.dnn.html#speechemotionrecognition.dnn.DNN.make_default_model">[docs]</a>    <span class="k">def</span> <span class="nf">make_default_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DNN.predict_one"><a class="viewcode-back" href="../../speechemotionrecognition.dnn.html#speechemotionrecognition.dnn.DNN.predict_one">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">trained</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="s2">&quot;Model should be trained or loaded before doing predict</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sample</span><span class="p">])))</span></div>
+
+<div class="viewcode-block" id="DNN.make_default_model"><a class="viewcode-back" href="../../speechemotionrecognition.dnn.html#speechemotionrecognition.dnn.DNN.make_default_model">[docs]</a>    <span class="k">def</span> <span class="nf">make_default_model</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make the model with default hyper parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This has to be implemented by child classes. The reason is that the</span>
+        <span class="c1"># hyper parameters depends on the model.</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
 
 

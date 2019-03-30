@@ -3,11 +3,13 @@ speechemotionrecognition module.
 Provides a library to perform speech emotion recognition on `emodb` data set
 """
 import sys
-from typing import Any
+from typing import Tuple
 
 import numpy
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 __author__ = 'harry-7'
+__version__ = '1.1'
 
 
 class Model(object):
@@ -66,7 +68,7 @@ class Model(object):
         # child classes
         raise NotImplementedError()
 
-    def predict(self, samples: numpy.ndarray) -> numpy.ndarray:
+    def predict(self, samples: numpy.ndarray) -> Tuple:
         """
         Predict labels for given data.
 
@@ -74,14 +76,29 @@ class Model(object):
             samples (numpy.ndarray): data for which labels need to be predicted
 
         Returns:
-            labels predicted for the data.
+            list: list of labels predicted for the data.
 
         """
-        if not self.trained:
-            sys.stderr.write(
-                "Model should be trained or loaded before doing predict\n")
-            sys.exit(-1)
-        return self.model.predict(samples)
+        results = []
+        for _, sample in enumerate(samples):
+            results.append(self.predict_one(sample))
+        return tuple(results)
+
+    def predict_one(self, sample: numpy.ndarray) -> int:
+        """
+        Predict label of a single sample. The reason this method exists is
+        because often we might want to predict label for a single sample.
+
+        Args:
+            sample (numpy.ndarray): Feature vector of the sample that we want to
+                                    predict the label for.
+
+        Returns:
+            int: returns the label for the sample.
+        """
+        # This need to be implemented for the child models. The reason is that
+        # ML models and DL models predict the labels differently.
+        raise NotImplementedError()
 
     def restore_model(self, load_path: str = None) -> None:
         """
@@ -121,19 +138,19 @@ class Model(object):
 
     def evaluate(self, x_test: numpy.ndarray, y_test: numpy.ndarray) -> None:
         """
-        Evaluate the current model on the given test data and return the
-        accuracy.
+        Evaluate the current model on the given test data.
+
+        Predict the labels for test data using the model and print the relevant
+        metrics like accuracy and the confusion matrix.
 
         Args:
             x_test (numpy.ndarray): Numpy nD array or a list like object
                                     containing the samples.
             y_test (numpy.ndarray): Numpy 1D array or list like object
                                     containing the labels for test samples.
-
-        Returns:
-             the accuracy produced by the model on given test data.
-
         """
-        # This will be specific to model so should be implemented by child
-        # classes
-        raise NotImplementedError()
+        predictions = self.predict(x_test)
+        print('Accuracy:%.3f\n' % accuracy_score(y_pred=predictions,
+                                                 y_true=y_test))
+        print('Confusion matrix:', confusion_matrix(y_pred=predictions,
+                                                    y_true=y_test))

@@ -80,7 +80,6 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Speech Emotion Recognition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">speechemotionrecognition</a></li>
 </ul>
 
@@ -150,11 +149,13 @@
 <span class="sd">Provides a library to perform speech emotion recognition on `emodb` data set</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;harry-7&#39;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s1">&#39;1.1&#39;</span>
 
 
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -213,7 +214,7 @@
         <span class="c1"># child classes</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Model.predict"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<div class="viewcode-block" id="Model.predict"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Predict labels for given data.</span>
 
@@ -221,14 +222,29 @@
 <span class="sd">            samples (numpy.ndarray): data for which labels need to be predicted</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            labels predicted for the data.</span>
+<span class="sd">            list: list of labels predicted for the data.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">trained</span><span class="p">:</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                <span class="s2">&quot;Model should be trained or loaded before doing predict</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span></div>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predict_one</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">results</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.predict_one"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model.predict_one">[docs]</a>    <span class="k">def</span> <span class="nf">predict_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict label of a single sample. The reason this method exists is</span>
+<span class="sd">        because often we might want to predict label for a single sample.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sample (numpy.ndarray): Feature vector of the sample that we want to</span>
+<span class="sd">                                    predict the label for.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: returns the label for the sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This need to be implemented for the child models. The reason is that</span>
+        <span class="c1"># ML models and DL models predict the labels differently.</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Model.restore_model"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model.restore_model">[docs]</a>    <span class="k">def</span> <span class="nf">restore_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">load_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -268,22 +284,22 @@
 
 <div class="viewcode-block" id="Model.evaluate"><a class="viewcode-back" href="../speechemotionrecognition.html#speechemotionrecognition.Model.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_test</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y_test</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Evaluate the current model on the given test data and return the</span>
-<span class="sd">        accuracy.</span>
+<span class="sd">        Evaluate the current model on the given test data.</span>
+
+<span class="sd">        Predict the labels for test data using the model and print the relevant</span>
+<span class="sd">        metrics like accuracy and the confusion matrix.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            x_test (numpy.ndarray): Numpy nD array or a list like object</span>
 <span class="sd">                                    containing the samples.</span>
 <span class="sd">            y_test (numpy.ndarray): Numpy 1D array or list like object</span>
 <span class="sd">                                    containing the labels for test samples.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">             the accuracy produced by the model on given test data.</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># This will be specific to model so should be implemented by child</span>
-        <span class="c1"># classes</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy:</span><span class="si">%.3f</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
+                                                 <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Confusion matrix:&#39;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">,</span>
+                                                    <span class="n">y_true</span><span class="o">=</span><span class="n">y_test</span><span class="p">))</span></div></div>
 </pre></div>
 
            </div>

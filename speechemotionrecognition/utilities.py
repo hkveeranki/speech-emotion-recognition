@@ -8,23 +8,58 @@ files as training samples.
 """
 import os
 import sys
+from typing import Tuple
 
 import numpy as np
 import scipy.io.wavfile as wav
-from sklearn.model_selection import train_test_split
 from speechpy.feature import mfcc
 
 mean_signal_length = 32000  # Empirically calculated for the given data set
 
 
-def get_data(data_path: str, flatten=True, mfcc_len=39,
-             class_labels=("Neutral", "Angry", "Happy", "Sad")):
+def get_feature_vector_from_mfcc(file_path: str, flatten: bool,
+                                 mfcc_len: int = 39) -> np.ndarray:
     """
-    Process the data for training and testing.
+    Make feature vector from MFCC for the given wav file.
 
-    Perform the following steps.
-    1. Read the files and get the audio frame.
-    2. Perform the test-train split.
+    Args:
+        file_path (str): path to the .wav file that needs to be read.
+        flatten (bool) : Boolean indicating whether to flatten mfcc obtained.
+        mfcc_len (int): Number of cepestral co efficients to be consider.
+
+    Returns:
+        numpy.ndarray: feature vector of the wav file made from mfcc.
+    """
+    fs, signal = wav.read(file_path)
+    s_len = len(signal)
+    # pad the signals to have same size if lesser than required
+    # else slice them
+    if s_len < mean_signal_length:
+        pad_len = mean_signal_length - s_len
+        pad_rem = pad_len % 2
+        pad_len //= 2
+        signal = np.pad(signal, (pad_len, pad_len + pad_rem),
+                        'constant', constant_values=0)
+    else:
+        pad_len = s_len - mean_signal_length
+        pad_len //= 2
+        signal = signal[pad_len:pad_len + mean_signal_length]
+    mel_coefficients = mfcc(signal, fs, num_cepstral=mfcc_len)
+    if flatten:
+        # Flatten the data
+        mel_coefficients = np.ravel(mel_coefficients)
+    return mel_coefficients
+
+
+def get_data(data_path: str, flatten: bool = True, mfcc_len: int = 39,
+             class_labels: Tuple = ("Neutral", "Angry", "Happy", "Sad")) -> \
+        Tuple[np.ndarray, np.ndarray]:
+    """Extract data for training and testing.
+
+    1. Iterate through all the folders.
+    2. Read the audio files in each folder.
+    3. Extract Mel frequency cepestral coefficients for each file.
+    4. Generate feature vector for the audio files as required.
 
     Args:
         data_path (str): path to the data set folder
@@ -33,12 +68,14 @@ def get_data(data_path: str, flatten=True, mfcc_len=39,
         class_labels (tuple): class labels that we care about.
 
     Returns:
-        4 numpy arrays, x_train x_test y_train y_test which represent training
-        samples, test samples, training labels and testing labels.
+        Tuple[numpy.ndarray, numpy.ndarray]: Two numpy arrays, one with mfcc and
+        other with labels.
+
+
     """
     data = []
     labels = []
-    max_fs = 0
+    names = []
     cur_dir = os.getcwd()
     sys.stderr.write('curdir: %s\n' % cur_dir)
     os.chdir(data_path)
@@ -46,33 +83,14 @@ def get_data(data_path: str, flatten=True, mfcc_len=39,
         sys.stderr.write("started reading folder %s\n" % directory)
         os.chdir(directory)
         for filename in os.listdir('.'):
-            fs, signal = wav.read(filename)
-            max_fs = max(max_fs, fs)
-            s_len = len(signal)
-            # pad the signals to have same size if lesser than required
-            # else slice them
-            if s_len < mean_signal_length:
-                pad_len = mean_signal_length - s_len
-                pad_rem = pad_len % 2
-                pad_len //= 2
-                signal = np.pad(signal, (pad_len, pad_len + pad_rem),
-                                'constant', constant_values=0)
-            else:
-                pad_len = s_len - mean_signal_length
-                pad_len //= 2
-                signal = signal[pad_len:pad_len + mean_signal_length]
-            mel_coefficients = mfcc(signal, fs, num_cepstral=mfcc_len)
-
-            if flatten:
-                # Flatten the data
-                mel_coefficients = np.ravel(mel_coefficients)
-            data.append(mel_coefficients)
+            filepath = os.getcwd() + '/' + filename
+            feature_vector = get_feature_vector_from_mfcc(file_path=filepath,
+                                                          mfcc_len=mfcc_len,
+                                                          flatten=flatten)
+            data.append(feature_vector)
             labels.append(i)
+            names.append(filename)
         sys.stderr.write("ended reading folder %s\n" % directory)
         os.chdir('..')
     os.chdir(cur_dir)
-    x_train, x_test, y_train, y_test = train_test_split(data, labels,
-                                                        test_size=0.2,
-                                                        random_state=42)
-    return np.array(x_train), np.array(x_test), np.array(y_train), np.array(
-        y_test)
+    return np.array(data), np.array(labels)

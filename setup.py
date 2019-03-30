@@ -9,7 +9,7 @@ def _get_requirements():
 
 setup(
     name='speechemotionrecognition',
-    version='1.0',
+    version='1.1',
     packages=['speechemotionrecognition'],
     url='http://github.com/harry-7/speech-emotion-recognition',
     license='MIT',

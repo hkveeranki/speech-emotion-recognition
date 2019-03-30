@@ -81,7 +81,6 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Speech Emotion Recognition</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">speechemotionrecognition</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="speechemotionrecognition.html">speechemotionrecognition package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="speechemotionrecognition.html#submodules">Submodules</a><ul class="current">
@@ -171,11 +170,14 @@ generate Mel Frequency Cepestral Coefficients features for the given audio
 files as training samples.</p>
 <dl class="function">
 <dt id="speechemotionrecognition.utilities.get_data">
-<code class="descclassname">speechemotionrecognition.utilities.</code><code class="descname">get_data</code><span class="sig-paren">(</span><em>data_path: str</em>, <em>flatten=True</em>, <em>mfcc_len=39</em>, <em>class_labels=('Neutral'</em>, <em>'Angry'</em>, <em>'Happy'</em>, <em>'Sad')</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/utilities.html#get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.utilities.get_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Process the data for training and testing.</p>
-<p>Perform the following steps.
-1. Read the files and get the audio frame.
-2. Perform the test-train split.</p>
+<code class="descclassname">speechemotionrecognition.utilities.</code><code class="descname">get_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/utilities.html#get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.utilities.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract data for training and testing.</p>
+<ol class="arabic simple">
+<li>Iterate through all the folders.</li>
+<li>Read the audio files in each folder.</li>
+<li>Extract Mel frequency cepestral coefficients for each file.</li>
+<li>Generate feature vector for the audio files as required.</li>
+</ol>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -188,8 +190,36 @@ files as training samples.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">4 numpy arrays, x_train x_test y_train y_test which represent training
-samples, test samples, training labels and testing labels.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Two numpy arrays, one with mfcc and
+other with labels.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple[numpy.ndarray, numpy.ndarray]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="speechemotionrecognition.utilities.get_feature_vector_from_mfcc">
+<code class="descclassname">speechemotionrecognition.utilities.</code><code class="descname">get_feature_vector_from_mfcc</code><span class="sig-paren">(</span><em>file_path: str</em>, <em>flatten: bool</em>, <em>mfcc_len: int = 39</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="reference internal" href="_modules/speechemotionrecognition/utilities.html#get_feature_vector_from_mfcc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.utilities.get_feature_vector_from_mfcc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make feature vector from MFCC for the given wav file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>file_path</strong> (<em>str</em>) – path to the .wav file that needs to be read.</li>
+<li><strong>flatten</strong> (<em>bool</em>) – Boolean indicating whether to flatten mfcc obtained.</li>
+<li><strong>mfcc_len</strong> (<em>int</em>) – Number of cepestral co efficients to be consider.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">feature vector of the wav file made from mfcc.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
 </td>
 </tr>
 </tbody>

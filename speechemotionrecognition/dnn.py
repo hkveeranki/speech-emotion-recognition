@@ -61,9 +61,6 @@ class DNN(Model):
         """
         self.model.save_weights(self.save_path)
 
-    def evaluate(self, x_test, y_test):
-        return self.model.evaluate(x_test, y_test)[1]
-
     def train(self, x_train, y_train, x_val=None, y_val=None, n_epochs=50):
         """
         Train the model on the given training data.
@@ -92,10 +89,19 @@ class DNN(Model):
                 best_acc = acc
         self.trained = True
 
-    def make_default_model(self):
+    def predict_one(self, sample):
+        if not self.trained:
+            sys.stderr.write(
+                "Model should be trained or loaded before doing predict\n")
+            sys.exit(-1)
+        return np.argmax(self.model.predict(np.array([sample])))
+
+    def make_default_model(self) -> None:
         """
         Make the model with default hyper parameters
         """
+        # This has to be implemented by child classes. The reason is that the
+        # hyper parameters depends on the model.
         raise NotImplementedError()
 
 

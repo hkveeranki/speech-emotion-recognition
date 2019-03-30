@@ -82,7 +82,6 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="index.html">Speech Emotion Recognition</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">speechemotionrecognition</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="speechemotionrecognition.html">speechemotionrecognition package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="speechemotionrecognition.html#submodules">Submodules</a><ul class="current">
@@ -210,30 +209,6 @@ class <cite>Model</cite>.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="speechemotionrecognition.dnn.DNN.evaluate">
-<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x_test</em>, <em>y_test</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Evaluate the current model on the given test data and return the
-accuracy.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x_test</strong> (<em>numpy.ndarray</em>) – Numpy nD array or a list like object
-containing the samples.</li>
-<li><strong>y_test</strong> (<em>numpy.ndarray</em>) – Numpy 1D array or list like object
-containing the labels for test samples.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the accuracy produced by the model on given test data.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="speechemotionrecognition.dnn.DNN.load_model">
 <code class="descname">load_model</code><span class="sig-paren">(</span><em>to_load</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load the model weights from the given path.</p>
@@ -249,8 +224,28 @@ containing the labels for test samples.</li>
 
 <dl class="method">
 <dt id="speechemotionrecognition.dnn.DNN.make_default_model">
-<code class="descname">make_default_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.make_default_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.make_default_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">make_default_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.make_default_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.make_default_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make the model with default hyper parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="speechemotionrecognition.dnn.DNN.predict_one">
+<code class="descname">predict_one</code><span class="sig-paren">(</span><em>sample</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/speechemotionrecognition/dnn.html#DNN.predict_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#speechemotionrecognition.dnn.DNN.predict_one" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict label of a single sample. The reason this method exists is
+because often we might want to predict label for a single sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sample</strong> (<em>numpy.ndarray</em>) – Feature vector of the sample that we want to
+predict the label for.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">returns the label for the sample.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
