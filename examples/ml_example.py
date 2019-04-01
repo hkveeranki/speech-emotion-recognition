@@ -11,8 +11,6 @@ def ml_example():
     to_flatten = True
     x_train, x_test, y_train, y_test, _ = extract_data(flatten=to_flatten)
     model = NN()
-    for i in range(271):
-        print(x_train[i].size, y_train[i])
     print('Starting', model.name)
     model.train(x_train, y_train)
     model.evaluate(x_test, y_test)

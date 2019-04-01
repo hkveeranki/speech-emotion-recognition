@@ -11,14 +11,15 @@ from speechemotionrecognition.utilities import get_feature_vector_from_mfcc
 
 
 def lstm_example():
-    to_flatten=True
-    x_train, x_test, y_train, y_test, num_labels = extract_data(flatten=to_flatten)
+    to_flatten = False
+    x_train, x_test, y_train, y_test, num_labels = extract_data(
+        flatten=to_flatten)
     y_train = np_utils.to_categorical(y_train)
-    y_test = np_utils.to_categorical(y_test)
+    y_test_train = np_utils.to_categorical(y_test)
     print('Starting LSTM')
     model = LSTM(input_shape=x_train[0].shape,
                  num_classes=num_labels)
-    model.train(x_train, y_train, x_test, y_test)
+    model.train(x_train, y_train, x_test, y_test_train, n_epochs=50)
     model.evaluate(x_test, y_test)
     filename = '../dataset/Sad/09b03Ta.wav'
     print('prediction', model.predict_one(
