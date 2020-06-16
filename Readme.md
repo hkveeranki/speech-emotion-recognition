@@ -55,7 +55,4 @@ If you don't have privileges to do so, you can install it at user level by runni
 * Found something you can improve, please send me a pull request with your changes.
 I will be more than happy to review and approve them.
 
-### Contacting me
-You can send an email to [harry7.opensource@gmail.com](mailto:harry7.opensource@gmail.com)
-
 **Note**: If you find this code useful, please leave a star :)
