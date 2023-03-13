@@ -22,3 +22,4 @@ def extract_data(flatten):
 
 def get_feature_vector(file_path, flatten):
     return get_feature_vector_from_mfcc(file_path, flatten, mfcc_len=39)
+# this is a code 
