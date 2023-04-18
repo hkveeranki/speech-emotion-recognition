@@ -43,7 +43,7 @@ Have a look at `examples/` directory. `ml_example.py` has examples using ML mode
 `cnn_example.py`  and `lstm_example.py` has examples using cnn and lstm models. 
 
 ### Documentation
-Code documentation can be found [here](https://harry-7.github.io/speech-emotion-recognition/html/main.html)
+Code documentation can be found [here](https://hkveeranki.github.io/speech-emotion-recognition/html/main.html)
 
 ### Installation
 
